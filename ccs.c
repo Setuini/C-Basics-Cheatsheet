@@ -1,4 +1,5 @@
-/*______________________________________________
+ /* Vorbereitung VO Einführung in die Programmierung WS 2016/2017
+ _______________________________________________
 |				Aufteilung Klausur			 	|
 |												|
 |	  Theorie   - 10 Punkte						|
@@ -98,6 +99,12 @@ void Basics(){
 		#include <stdint.h>
 		//String Funktionen
 		#include <string.h>
+		//Definitionen von Makros
+		#include <stddef.h>
+		//Tests für Zeichenklassen
+		#include <ctype.h>
+		//Zeit und Random
+		#include <time.h>
 	}
 
 	struct 1.3 Variables{
@@ -314,7 +321,7 @@ void Pointer(){
 	//Printing
 	%p 					// gibt die Adresse der Speicherstelle zurück			
 
-	//Example:
+	//Beispiel:
 	int* pointer,pointer2;
 	pointer = &pointer2;
 
@@ -368,7 +375,7 @@ void Pointer(){
 	char numbers[10][50];	// Reserviert 500 Bytes, egal ob einige Stellen leer sind
 	char* numbers[10];		// Reserviert für jeden String den benötigten Speicherplatz
 
-	// Example:
+	// Beispiel:
 	int arr[4][2];
 
 	arr 				-->			Adresse der ersten Zeile des Arrays
@@ -476,8 +483,109 @@ void Arrays(){
 	strlen, strcpy, strcmp					// Funktionen zur Bearbeitung von strings in string.h library
 }
 
-//4. Dynamische Speicherklassen 	
+//4. Structs, Unions & Bitfelder 	
 void Structs_Unions_Bitfelder(){
+
+	//STRUCTS
+
+	// Strukturen sind Ansammlung von mehreren Variablen die unter einem einzigen Namen zusammengefasst werden
+	// Die Variablen können auch verschiedene Typen haben. Structs dienen der Organisation von Daten.
+	// Beispiel:
+
+	struct point{				/*oder*/			struct point {			
+		int x;											int x;
+		int y;											int y;
+	};												} pt;
+
+	struct point pt;
+
+	// Zugriff auf die Variablen im Struct
+	int value = pt.x;
+
+	// Initialisierung
+	struct point maxpt = {150,300}; // Es können auch einzelne Initialisierer freigelassen werden
+	// Strukturen können: anderen Strukturen vom selben Typ zugewiesen werden
+						//Rückgabe und Übergabe an Funktionen
+						// Ermittlung der Adresse mit dem Adressoperator &
+						// Ermittlung der Größe mit dem sizeof-Operator
+						// Für Vergleiche müssen eigene Funktionen geschrieben werden!
+	//Zeiger auf Strukturen können verwendet werden um auf den Inhalt einer Struktur zuzugreifen z.b. Print Funktion
+	struct person *p1;
+	p1->y 	// Zugriff über Pfeil Operator, (*p1).name auch möglich aber Pfeil Operator besser.
+	
+	// Übergabe als Parameter (Rückgabe einer Funktion funktioniert auch)
+	// Variante 1: Einzelne Elemente Übergeben 
+	fun(pt.x);
+	// Variante 2: Gesamtes Struct übergeben (langsamer und verbraucht mehr Platz, aber sicherer)
+	void fun(struct person p);
+	// Variante 3: Zeiger auf Struct übergeben (Schnellere Variante, aber könnte verändert werden. Lösung: const)
+	void fun(struct person p*);
+
+	// Array von Structs wird oft für die Speicherung zusammenhängender Daten verwendet. Beispiele: "Foliensatz 13 S. 14+15"
+	int val = p1[i].x;
+
+	// Verwendung von zusammengesetzte Literalen
+	(struct person){"Hans Wurst", "Straße 4, 6020 IBK"}
+
+	// Man kann auch Strukturen in Strukturen verschachteln
+
+	struct dog {
+		int age;
+	}
+
+	struct animals{
+		dog dogs;
+		char cats[20];
+	}
+
+	// In Strukturen können auch Zeiger verwendet werden (Elemente sollten aber auf dynamisch allokierten Speicherplatz zeigen)
+
+	//TYPEDEF
+		//Erstellung eines neuen Typnamens. Bringt Portabilität, Verständlichkeit ~
+		// Beispiele:
+	typedef unsigned long un64;
+	typedef struct treenode tn;
+
+	typedef struct person{
+		char username[8];
+		char password[8];
+		int uid;
+	} user;
+
+	user admin = {"Klaus","123",1};
+
+	//UNIONS
+		// Kein Unterschied zu Structs außer dem Schlüsselwort und dem Umgang mit den Daten.
+		// Eine Union ist eine Variable die zu verschiedenen Zeitpunkten Objekte mit verschiedenen Datentypen und Größen enthält.
+		// Mit unions kann man sich Speicherplatz sparen.
+		// Man kann aber immer nur 1 Wert speichern z.B. im folgenden Beispiel entweder ival oder fval oder cval;
+	
+	union u_tag{
+		int ival;
+		float fval;
+		char *cval;
+	} u;
+
+	//BITFELDER
+		// Einzelne Elemente einer Struktur oder einer Union können als Bitfelder deklariert werden.
+		// Diese Elemente bestehen aus einer ganzzahligen Variable die wiederum aus einer bestimmten Anzahl von Bits besteht.
+		// Anwendungssinn: Einsparung von Speicherplatz, Zugriff auf Hardware
+
+		// Typ muss ganzzahlig sein
+		// Mit dem Bezeichner Elementname greift man auf das Element zu
+		// Breite gibt Anzahl der Bits an
+	typedef struct time{
+	//  Typ Elementname : Breite
+		unsigned int hour:5;
+		unsigned int minute:6;
+	}time_t;
+
+	time_t time_now;
+	time_now.hour = 12;
+	
+		// Bitfelder können keine adressierbaren Speicherstellen belegen , kein scanf, kein Array von Bitfeldelementen;
+		// Die Anordnung der Bits im Speicher ist nicht standardisiert
+		// Zugriff langsamer als auf herkömmliche Datentypen
 }
 
 //5. Dynamische Speicherverwaltung
@@ -524,11 +632,9 @@ void Dynamische_Speicherverwaltung(){
  	alloca()	// Diese Funktion fordert den Speicher vom Stack an.
 
  	// Beispiel mehrdimensionales Array (Foliensatz 11 S. 22)
- 	// Als erstes wird der Speicherflatz für die Zeilen (erste Dimension []) und anschließend für die Spalten (zweite Dimension []) reserviert
+ 	// Als erstes wird der Speicherplatz für die Zeilen (erste Dimension []) und anschließend für die Spalten (zweite Dimension []) reserviert
  	// Das freigeben geschieht in der umgekehrten Reihenfolge
 }
-
-
 
 //6. Speicherklassen
 void Speicherklassen(){
@@ -584,10 +690,148 @@ void Speicherklassen(){
 }
 
 
-//7. Eingabe & Ausgabe
+//7. Eingabe & Ausgabe (I/O)
 void Eingabe_Ausgabe(){
-	//scanf getchar putchar
-	.
+	
+	// Ein und Ausgabe ohne File
+		// Ausgabe auf STDOUT
+		printf("%i\n", var);
+
+		// Einlesen von STDIN
+		scanf("%i\n",&var);
+		
+	// stdio.h Library für Ein und Ausgabe. "Foliensatz 15 Seite 8" Überblick über alle wichtigen I/O Funktionen
+	// Man unterscheidet: 
+		// Textströme: 		Folge von Zeilen, Zeile endet mit Zeilentrenner \n
+		// Binäre Ströme: 	Byte für Byte verarbeitet
+	
+	// Um nicht immer Zeichen für Zeichen übertragen zu müssen gibt es Pufferung:
+		// Vollgepuffer:	Zeichen werden übertragen wenn der Puffer voll ist (4096 Bytes)
+		// Zeilengepuffert: Zeichen werden übertragen wenn eine neue Zeile beginnt oder der Puffer voll ist 
+		// Ungepuffert: 	Sofort übertragen
+	
+	// Standard Ströme: Zeiger auf ein FILE-Object
+		// stdin: 	mit der Tastatur verbunden 			zeilenweise gepuffert
+		// stdout: 	mit dem Bildschirm verbunden 		zeilenweise gepuffert
+		// stderr:  mit dem Bildschirm verbunden 			      ungepuffert
+
+	// Man kann die Ausgabe auch in eine Datei schreiben. Dazu wird ein Objekt vom Typ FILE angelegt und initialisiert.
+	// Eine erfolgreich geöffnete Datei liefert immer einen Zeiger auf ein FILE-Speicherobjekt zurück.
+	// Das FILE-Speicherobject ist ein Struct welcher alle wichtigen Informationen für die I/O speichert
+	
+	FILE *fp;
+
+	// Öffnen von Dateien mit fopen. Die Funktion liefert einen Pointer auf den entsprechenden Datenstrom sonst NULL Pointer
+	FILE *fopen(const char *restrict filename, const char *restrict mode);
+	// filename: Dateiname oder Pfad
+	// mode: Zugriffsmodus 
+		// r 	Lesen
+		// w 	Schreiben (falls die Datei nicht existiert wird sie erstellt)
+		// a 	Öffnen zum Anhängen (falls die Datei nicht existiert wird sie erstellt)
+		// r+	Lesen und Schreiben, beginnt am Anfang der Datei
+		// w+ 	Lesen und Schreiben, überschreibt die Datei
+		// a+ 	Lesen und Schreiben, beginnt am Ende der Datei
+		// Um Dateien im Binärmodus zu lesen muss man nach dem mode noch ein b hinzufügen z.b. r+b
+
+	// Nach Schreiboperationenn muss man die Operation mit bestimmten Funktionen abschließen:
+	// Schreiben, dann Lesen: fflush, fsetpos, fseek, rewind
+
+	// Nach Leseoperationen muss der Schreibpointer positioniert werden:
+	// Lesen, dann Schreiben: fseek, fsetpos, rewind
+
+	//Beispiel:
+	FILE *fp = fopen(filename, "r");
+	if (fp != NULL)
+	{
+		printf("Datei wurde geöffnet.\n");
+	}
+
+	// Schließen von Dateien mit fclose
+	int fclose(FILE *fp);
+	// fclose schliest den zu fp gehörigen Datenstrom und leert den damit verbundenen Puffer
+	// Falls erfolgreich gibt die funktion 0 zurück, ansonsten etwas anderes.
+
+	// Einlesen von einzelnen Zeichen, gibt EOF bei Fehler zurück
+	int fgetc(FILE *fp);
+	int getc(FILE *fp);
+	int getchar(); /*entspricht*/ 	getc(stdin);
+
+	// Einzelnes Zeichen im Datenstrom wieder zurückstellen. Gibt das Zeichen zurück, gibt EOF bei Fehler zurück
+	int ungetc(int x, FILE *fp);
+
+	// Schreiben von einzelnen Zeichen, gibt EOF bei Fehler zurück
+	int fputc(int c, FILE *fp);
+	int  putc(int c, FILE *fp);
+	int  putchar(int c); /*entspricht*/ 	petc(c,stdout);
+
+	// Beispiel: "Foliensatz 15 Seite 17"
+
+	// Zeilenweise einlesen
+	char *fgets(char *restrict buf, int n, FILE *restrict fp);
+	// Vom Strom fp werden bis zu n-1 Zeichen in den Puffer buf eingelesen. Am Ende wird ein Terminierungszeichen angehängt.
+	// Gibt NULL-Pointer bei Fehler zurück, ansonsten Anfangsadresse
+
+	// Zeilenweise schreiben. Rückgabewert >=0 bei erfolgt ansonsten EOF
+	// fputs schreibt den nullterminerten String str in den Strom fp. Das Terminierungszeichen zählt nicht dazu.
+	int fputs(const char *restrict str, FILE *restrict fp);
+	//  puts gibt den String str auf stdout aus.
+	int puts(const char *str);
+
+	// Formatierte Ausgabe
+	int fprintf(FILE *restrict fp, const char *restrict format, ...);
+	// Wie printf nur für den angegebenen Datenstrom. fp ist ein Zeiger auf den Strom
+	// Rückgabewert zeigt an wie viele Zeichen geschrieben wurde. Negativer Wert bei Fehler
+
+	// Formatiertes Einlesen
+	int fscanf(FILE *restrict fp, const char *restrict format, ...)
+	// Wie scanf nur für den angegebenen Datenstrom. fp ist ein Zeiger auf den Strom
+	// Rückgabewert zeigt Anzahl der Konvertierungen an. Bei Fehler EOF
+	// Syntax und Beispiele "Foliensatz 15 S, 22+23"
+
+	// Anschließend Lesen und Schreiben von Binärdateien S. 24+25 (sehr unwahrscheinlich bei der Klausur)
+
+	// Bewegen des FILE-Pointers. Bei Erfolg wird 0 zurückgeben, ansonsten ungleich 0
+	int fseek(FILE *fp, long offset, int position);
+	// fp: 		 Der zu verändernde File-Pointer
+	// position: Wo offset startet: 
+				// SEEK_SET (Anfang der Datei), 
+				// SEEK_CUR (Aktuelle Position des File-Pointers)
+				// SEEK_END (Ende der Datei)
+	// offset: 	 Anzahl der Bytes um den der File Pointer vom offset weg verschoben werden soll
+
+	// Position ermitteln und setzen. Position: Anzahl von Bytes vom Anfang der Datei. Bei Erfolg wird 0 zurückgeben, ansonsten ungleich 0
+	int fgetpos(FILE *fp, fpos_t *restrict pos);
+	int fsetpos(FILE *fp, const fpos_t *pos);
+
+	// Liefert aktuelle Schreib/Leseposition im Strom (gemeinsam mit fseek benutzen)
+	long ftell(FILE *fp);
+
+	// Setzt die aktuelle Schreib/Leseposition an den Anfang des Stroms
+	void rewind(File *fp);
+
+	// Überprüfen ob EOF ein Fehler ist oder ob es wirklich End of file ist.
+	int feof(FILE *fp); 		// Gibt ungleich 0 zurück wenn EOF-Flag für fp gesetzt ist, sonst 0
+	int ferror(FILE *fp);		// Gibt ungleich 0 zurück wenn Fehler-Flag für fp gesetzt ist, sonst 0
+	void clearerr(FILE *fp);	// Löschen von Fehler und EOF-Flags
+
+	// Datei löschen. 		Gibt 0 bei Erfolg zurück, sonst -1
+	int remove(const char *pathname);
+	// Datei umbenennen.	Gibt 0 bei Erfolg zurück, sonst -1
+	int rename(const char *oldname,const char *newname);
+
+	// Pufferung für Datenstrom setzen
+	int setvbuf(FILE *restrict fp, char *restrict buf, int type, size_t size);
+	// type: 
+		// _IONBF (Ungepuffert)
+		// _IOLBF (Zeilenpufferung)
+		// _IOFBF (Vollpufferung)
+
+	// Puffer leeren. Alle Daten im Puffer werden geschrieben. Gibt 0 bei Erfolg zurück, sonst EOF
+	// Ist der Parameter NULL werden ALLE offenen Puffer geleert.
+	int fflush(FILE *stream);
+
+	// Einige Funktionen setzen im Fehlerfall die globale Variable "errno" auf einen bestimmten Wert.
+	// Funktionen: fopen, fclose, remove, rename, fgsetpos, fgetpos, fseek, ftell, fflush;
 }
 
 //8. Commandozeilenparameter

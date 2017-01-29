@@ -8,10 +8,10 @@
 char* duplicate(char* str);
 char* replicate(char* str, int times);
 char* reverse(char* str);
-int str_to_int(char* str);
 void duplicate_ptr(char** strptr);
 void replicate_ptr(char** strptr, int times);
 void reverse_ptr(char** strptr);
+int str_to_int(char* str);
 char* userinput();
 
 int main(int argc, char const **argv){
@@ -52,7 +52,6 @@ int main(int argc, char const **argv){
 	//String to int
 	int int1 = str_to_int(test2);
 	printf("String to int:       %d\n\n",int1);
-
 
 	//Userinput
 	char* userin = userinput();
