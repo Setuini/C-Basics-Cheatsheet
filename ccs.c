@@ -60,9 +60,7 @@
 |												|
 | 9.  Präprozessor								|
 |												|
-| 10. Listen					    			|
-|												|
-| 11. Code Snippets					    		|
+| 10. Usefull Functions				    		|
 |_______________________________________________|*/
 
 //1. Basics
@@ -83,7 +81,29 @@ void Basics(){
 
 	struct 1.1 Compile{
 
+		// C-File --> Präprozessor  --> Compiler --> Assembler --> Linker
+		// .c 	  --> .c 			--> .s 		 --> .o 	   --> .out
+		
 		// gcc -Wall -Werror -std=c99 prog.c -o. prog 
+		// ./prog
+
+		-Wall 		// Gibt Warnungen aus
+		-Wextra 	// Gibt zusätzliche Warnungen aus
+		-Werror 	// Warnungen werden als Fehler behandelt und müssen behoben werden um zu compilieren
+
+		-O[0-2]		// Optimierung (Je höher desto mehr)
+		-Os 		// Optimiert die Größe des Programmcodes
+
+		-g 			// Debug Informationen
+		-g[0-3]		// Debug Informations-Levels (Je höher desto mehr Informationen)
+		-gdb 		// Debug Informationen vom GNU Debugger	
+
+		-version 	// Gibt GCC Version aus
+		--help 		// Zeigt mögliche Optionen an
+
+		-E 			// Ablauf nur bis zum Präprozessor: Kommentare entfernt, #define Werte ersetzt, Libraries eingebunden
+		-s 			// Ablauf nur bis zum Compiler
+		-c 			// Ablauf nur bis zum Assembler (kein Linker)
 	}
 
 	struct 1.2 Librarys{
@@ -837,25 +857,67 @@ void Eingabe_Ausgabe(){
 void Commandozeilenparameter(){
 
 	int main(int argc, char const **argv){return EXIT_SUCCESS}
-	//argc = argument counter
-	//argv = argument vector
-	/*
-	Example: ./main abc 123
+	int argc		//	(argument counter)	 Wenn größer als 1, enthalten   argv[1]    bis   argv[argc -1]   Programmparameter
+	char **argv	 	//	(argument vector)	 Array von Pointer auf char
+	
+	// Parameter sind Zeichenketten und müssen mit Funktionen umgewandelt werden
+	// old: atoi, atol, atof
+	// new: strtol, strtoul, strtod
+
+	/* Beispiel:
+
+	./main abc 123
 		ARGC: 3
-		ARGV: ["./main"] ["abc"] ["123"]
+		ARGV: ["./main"] ["abc"] ["123"]	
+
 	*/
+	
 }
 
 //9. Präprozessor
 void Präprozessor(){
+
+	// Neben konstanten Variablen kann man auch konstante Funktionen als Präprozessordirektive definieren
+	//Beispiel:
+
+	#define eval(z) ((z) *= ((z) +1) /2 )
+
+	int a = 5;
+	eval(a); 	// ((a) *= ((a) +1) /2 )
+
+	#define ausgabe(variable) printf(#variable"=%d\n",variable)
+
+	#define foo (4+foo) // nicht rekursiv, nur eine Ersetzung
+
 }
 
-//10. Listen
-void Listen(){
+//10. Usefull Functions
+void Usefull_Functions(){
+
+	struct string.h {
+		strlen()	//Calculates the length of string
+		strcpy()	//Copies a string to another string
+		strcat()	//Concatenates(joins) two strings
+		strcmp()	//Compares two string
+		strlwr()	//Converts string to lowercase
+		strupr()	//Converts string to uppercase
+		strchr()    //Locates first occurence of a char
+		strtok()	//Seperate Strings
+	}
+
+	struct random numbers{
+
+		//seed for rand - has to be the first function inside main
+		srand(time(NULL));
+
+		//random number
+		int randomnumber = rand();
+
+		//random number in range
+		in randomnumber = min + rand() % (max - min);
+	}
+
 }
 
-//11. Code Snippets
-void Code_Snippets(){
 
-}
 
