@@ -14,6 +14,7 @@
 |	  Kurztests									|
 |	  Kein Debugging							|
 |	  Keine Makefiles							|
+|	  String-Funktionen							|
 |												|
 |	  Eigner Rechner erlaubt					|
 |	  PS Unterlagen und VO Folien erlaubt		|
@@ -24,6 +25,7 @@
 |         Table of Content:						|
 |												|
 | 1.  Basics:									|
+|		1.0 Hello World							|
 |		1.1 Compile								|
 |		1.2 Librays								|
 |		1.3 Variablen & Datentypen 				|
@@ -32,7 +34,7 @@
 |			1.3.3 Literale						|
 |			1.3.4 Enum 							|
 |			1.3.5 Konstanten					|
-|			1.3.6 Gloable Variablen 			|
+|			1.3.6 Globale Variablen 			|
 |		1.4 Printing							|
 |		1.5 Operatoren & Ausdrücke				|
 |		1.6 Kontrolstrukturen					|
@@ -46,7 +48,7 @@
 |												|
 | 4.  Struct Unions Bitfelder					|
 |												|
-| 5.  Dynamische Speicherklassen 				|
+| 5.  Dynamische Speicherverwaltung				|
 |												|
 | 6.  Speicherklassen							|
 |												|
@@ -65,6 +67,19 @@
 //1. Basics
 void Basics(){
 
+
+	struct 1.0 Hello World{
+
+		#include <stdio.h>
+		#include <stdlib.h>
+
+		int main(int argc, char** args)
+		{
+			printf("Hello World\n");
+			return EXIT_SUCCESS;
+		}
+	}
+
 	struct 1.1 Compile{
 
 		// gcc -Wall -Werror -std=c99 prog.c -o. prog 
@@ -81,6 +96,8 @@ void Basics(){
 		#include <limits.h>
 		#include <float.h>
 		#include <stdint.h>
+		//String Funktionen
+		#include <string.h>
 	}
 
 	struct 1.3 Variables{
@@ -140,7 +157,7 @@ void Basics(){
 
 
 		struct 1.3.3 Literale{
-			"Folie 04 Seite 25"
+			"Foliensatz 04 Seite 25"
 			//
 		}
 
@@ -162,7 +179,7 @@ void Basics(){
 	}
 
 	struct 1.4 Printing{
-		"Folie 04 Seite 29"
+		"Foliensatz 04 Seite 29"
 
 		//printf(Formatstring, Parameterliste)
 		//%[flags][weite][.genauigkeit][modifizierer]typ
@@ -189,8 +206,8 @@ void Basics(){
 	}
 
 	struct 1.5 Operatoren und Ausdrücke{
-		"Folie 05 Seite 2" - Einführung
-		"Folie 05 Seite 19" - Assoziativtät
+		"Foliensatz 05 Seite 2" - Einführung
+		"Foliensatz 05 Seite 19" - Assoziativtät
 
 		_Bool A = 1;
 		char B = 'B';
@@ -433,24 +450,144 @@ void Pointer(){
 
 //3. Arrays
 void Arrays(){
+
+	int array[5]; 					// Der Compiler legt mit malloc/calloc Speicherplatz an
+	array [2] = 10;
+	array[5] = 1; 					// Overflow
+	char array[] = {'A','B','C'} 	// Längenangabe kann weggelassen werden
+	double array[4] = {1.0,44.7} 	// Rest wird mit Nullen aufgefüllt
+	const int array[];				// Werte können nicht verändert werden
+	void fun (arr[]);				// Bei Übergabe eines Arrays an eine Funktion wird nur die Anfangsadresse übergeben.
+	
+	print_array((int[]){1,2,3}, MAX)//C99 Array printing
+
+	// Zwei Arrays können nicht mit arr1 = arr2 überprüft werden, sondern mit Hilfe einer Schleife
+	int size = sizeof(array) / sizeof(int);
+
+	int mdarray[3][4];				// Mehrdimensionale Arrays mdarray = 3 Zeilen 4 Spalten
+
+	int mdarray[3][4] = { {1}, {2,4} };    	// Matrix: 1 0 0 0
+											//         2 4 0 0
+											//		   0 0 0 0
+											//	mdarray[1][0] hat Wert 2 ->	 Zeile 2 Spalte 1 (Indizes starten von 0)
+	
+	char string[] = "Hello";				// Strings in C als Character Arrays, 
+	char string[5] = {'H','e','l','l','o'};	// letztes Element \0 (0 Byte), array automatisch 1 wert größer als angegeben			
+	strlen, strcpy, strcmp					// Funktionen zur Bearbeitung von strings in string.h library
 }
 
 //4. Dynamische Speicherklassen 	
 void Structs_Unions_Bitfelder(){
 }
 
-//5. Dynamische Speicherklassen
-void Dynamische_Speicherklassen(){
+//5. Dynamische Speicherverwaltung
+void Dynamische_Speicherverwaltung(){
+
+	// Speicherplatz dynamisch zur Laufzeit anfordern ist effizienter als ein übergroßes Array zu erstellen
+
+	size_t 						// Vorzeichenloser Ganzzahltyp
+
+	// MALLOC
+	void *malloc(size_t size)	// Reserviert size Bytes am Heap, liefert die Anfangsadresse des Speicherbereichs oder NULL bei Fehler.
+	// Beispiel:
+	size_t max_numbers = 10;
+	double *numbers = malloc (max_numbers * sizeof(*numbers));
+	
+	// CALLOC
+	void *calloc(size_t nmeb, size_t size) // Unterschied zu malloc: reservierter Speicher wird mit 0 initialisiert und benötigt mehr Zeit
+	//Beispiel:
+	iptr = (int*) calloc(n,sizeof(*iptr));
+	
+	// REALLOC
+	void *realloc(void *ptr, size_t size)  // Möglich den reservierten Speicherplatz während der Laufzeit anzupassen.
+								// Zuerst wird die Größe des durch ptr adressierten Speicherblocks verändert (dieser muss auch dynamisch erzeugt worden sein).
+								// Es wird ein Zeiger auf die Anfangsadresse des reservierten Speicherblocks mit größe size zurückgegeben.
+								// Der ursprüngliche Inhalt bleibt erhalten.
+								// Möglichst selten verwendn, Umkopieren aufwändig
+								// Speicher kann auch verkleinert werden, hintere Abschnitt des ursprünglichen Blocks wird freigegeben
+	ptr = realloc(NULL, size) /*entspricht*/ ptr = malloc(size)
+	//Beispiel:
+	int *numbers = calloc(8, sizeof(*numbers));
+	numbers = realloc(numbers, max * sizeof(*numbers));
+	
+	
+
+	// FREE
+	void free(void *ptr); 		// Nicht benötigter Speicher muss immer freigegeben werden
+								// Der übergebene Zeiger muss auf einen Speicher zeigen der vorher reserviert wurde (durch die obigen Funktionen).
+								// free setzt den Zeiger nicht auf NULL, sollte programmiert werden sonst undefiniertes Verhalten
+
+	// HEAP: Bei der dynamischen Speicherverwaltung kommt der Speicher vom Heap, wird dynamisch zugewiesen bis free aufgerufen wird.
+	//       Bei einer Speicheranforderung wird ein zusammenhängender Block angefordert. Durch anfordern und freigeben kann es zu einer Fragmentierung kommen.
+	//       Speicherreservierungen möglichst sparsam einsetzten. 
+ 	
+ 	alloca()	// Diese Funktion fordert den Speicher vom Stack an.
+
+ 	// Beispiel mehrdimensionales Array (Foliensatz 11 S. 22)
+ 	// Als erstes wird der Speicherflatz für die Zeilen (erste Dimension []) und anschließend für die Spalten (zweite Dimension []) reserviert
+ 	// Das freigeben geschieht in der umgekehrten Reihenfolge
 }
+
+
 
 //6. Speicherklassen
 void Speicherklassen(){
+
+	// Adressräume von Variablen und Funktionen
+
+	// Codesegment: Maschinencode des Programms
+	// Datensegment: globale (externe) Variablen
+	// Stack: 	Lokale Variablen, Rücksprungadresse, Parameter einer Funktion
+	// Heap:    Dynamische Variablen 
+
+	//Gültigkeitsbereiche von Variablen und Funktionen
+
+	// Anweisungsblock: 	Nur unnerhalb des Blocks zugänglich
+	// Funktionsprototyp: 	Variablen innerhalb eines F-Prototys gelten nur bis zum Ende der Funktion
+	// Datei/Modul: 		Speicherobjekte außerhalb einer Funktion können ab Definition bis Dateiende verwendet werden
+	// Funktion: 			Labels sind innerhalb einer Funktion überall sichtbar
+
+	// Lebensdauer
+
+	// Autopmatische Lebensdauer
+		// Klasse von Speicherobjekten die zur Ausführungszeit einer Funktion/Block definiert sind. 
+		// Stack Frame wird angelegt und am Ende wieder geleert.
+
+	// Statische Lebensdauer
+		// Speicherobjekte die zur gesamten Programmlaufzeit einen festen Platz haben
+		// Statische Speicherobkekte werden nicht in einem Stack Frame sondern im Datensegment des Progs gespeichert.
+
+	// Speicherort: Speicherobjekt kann im Speicher oder Prozessorregister gehalten werden. 
+	             // Es wird zwischen Datensegment und Stack unterschieden
+
+	// Bindung: 	Extern: Speicherobjekt kann überallin einem Programm (auch mehrere Dateien) verwendet werden
+				//  Intern: Speicherobjekt kann nur in derselben Datei verwendet werden, in der es definiert ist.
+				//	Keine:  Lokale Variablen
+
+
+	auto int i = 2;	// Spezifizierer "auto" nur für lokale Variablen. Automatisch Standard von lokalen Variablen in Blöcken.
+					// auto - Variablen sind nur in diesem Block verfügbar und müssen explizit initialisiert werden
+
+	register int i = 0; // Schlüsselwort wird bei Variablen verwendet um es so lange wie möglich im Prozessorregister zu halten.
+						// Kann nicht mit dem Adressoperator zugegriffen werden, ansonsten gleiche Eigenschaften wie auto-Variable.
+
+	static int b = 2;   // Variable in Funktion: Der Wert der lokalen Variable bleibt nach der Rückkehr aus einer Funktion erhalten. 
+					    // Kann trotzdem nur lokal angesprochen werden.
+					
+	static fun();	    // Funktion oder globale Variable: Sichtbarkeit auf die aktuelle Datei beschränkt.  Bsp: Funktion mit selben Namen in verschiedenen Dateien möglich.
+
+	extern int a; 		// Mit extern kann man auf ein Speicherobjekt außerhalb der Datei zugreifen. (Compiler gibt Linker bescheid)
+						// Variable: Es wird keine neue Variable definiert sondern eine bereits definierte wird deklariert.
+						// Funktion: Funktion global in allen Dateien sichtbar.
+
+						// Kurzfassung: Foliensatz 10 S. 16
 }
+
 
 //7. Eingabe & Ausgabe
 void Eingabe_Ausgabe(){
 	//scanf getchar putchar
-	aa
+	.
 }
 
 //8. Commandozeilenparameter
@@ -469,22 +606,4 @@ void Listen(){
 void Code_Snippets(){
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
