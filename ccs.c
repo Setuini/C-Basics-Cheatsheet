@@ -689,7 +689,6 @@ void Speicherklassen(){
 						// Kurzfassung: Foliensatz 10 S. 16
 }
 
-
 //7. Eingabe & Ausgabe (I/O)
 void Eingabe_Ausgabe(){
 	
@@ -836,6 +835,15 @@ void Eingabe_Ausgabe(){
 
 //8. Commandozeilenparameter
 void Commandozeilenparameter(){
+
+	int main(int argc, char const **argv){return EXIT_SUCCESS}
+	//argc = argument counter
+	//argv = argument vector
+	/*
+	Example: ./main abc 123
+		ARGC: 3
+		ARGV: ["./main"] ["abc"] ["123"]
+	*/
 }
 
 //9. Präprozessor
