@@ -4,12 +4,10 @@
 
 #define BUFFER 2048
 
-//----------------------------------------------- Prototypes -----------------------------------------------
 void allocate(int** array_ptr, int max);
 void reallocate(int **array_ptr, int max);
 int userinput();
 
-//-----------------------------------------------    Main    -----------------------------------------------
 int main(int argc, char const *argv[]){
 	
 	int max = 1;
@@ -45,7 +43,6 @@ int main(int argc, char const *argv[]){
 	return EXIT_SUCCESS;
 }
 
-//----------------------------------------------- Functions -----------------------------------------------
 //Allocate max * sizeof(int) memory
 void allocate(int** array_ptr, int max){
 	*array_ptr = (int*)malloc(sizeof(int)*max);
