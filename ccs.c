@@ -1,34 +1,36 @@
+
  /* Vorbereitung VO Einführung in die Programmierung WS 2016/2017
  _______________________________________________
+|												|
 |				Aufteilung Klausur			 	|
 |												|
-|	  Theorie   - 10 Punkte						|
+|	  Theorie   		- 	10 Punkte			|
 |	  Schwerpunkt Programmierkonzepte			|
 |												|
-|	  Aufgabe 1 - 10 Punkte						|
+|	  Aufgabe 1 		- 	10 Punkte			|
 |	  Eher Einfache Aufgabe 					|
 |												|
-|	  Aufgabe 2 - 10 Punkte						|
+|	  Aufgabe 2 		- 	10 Punkte			|
 |												|
 |	  Hints:									|
-|	  For loop in while loop					|
-|	  Kurztests									|
-|	  Kein Debugging							|
-|	  Keine Makefiles							|
-|	  String-Funktionen							|
+|	  	For loop in while loop umwandeln		|
+|	  	String-Funktionen						|
+|	  	Kurztests								|
+|	  	Kein Debugging							|
+|	  	Keine Makefiles							|
 |												|
 |	  Eigner Rechner erlaubt					|
 |	  PS Unterlagen und VO Folien erlaubt		|
-|_______________________________________________|*/
+|______________________________________________*/
 
-/*______________________________________________
-|												|
-|         Table of Content:						|
+
+/* 	           Table of Contents:
+ _______________________________________________
 |												|
 | 1.  Basics:									|
 |		1.0 Hello World							|
 |		1.1 Compile								|
-|		1.2 Librays								|
+|		1.2 Libraries							|
 |		1.3 Variablen & Datentypen 				|
 |			1.3.1 Char Beispiele 				|
 |			1.3.2 Bool 							|
@@ -38,7 +40,7 @@
 |			1.3.6 Globale Variablen 			|
 |		1.4 Printing							|
 |		1.5 Operatoren & Ausdrücke				|
-|		1.6 Kontrolstrukturen					|
+|		1.6 Kontrollstrukturen					|
 |			1.6.0 If & Switch 					|
 |			1.6.1 Schleifen 					|
 |		1.7 Funktionen							|
@@ -47,21 +49,20 @@
 |												|
 | 3.  Arrays									|
 |												|
-| 4.  Struct Unions Bitfelder					|
+| 4.  Structs Unions Bitfelder					|
 |												|
 | 5.  Dynamische Speicherverwaltung				|
 |												|
 | 6.  Speicherklassen							|
 |												|
 | 7.  Eingabe & Ausgabe							|
-|		7.1 Strings								|
 |												|
 | 8.  Commandozeilenparameter					|
 |												|
 | 9.  Präprozessor								|
 |												|
-| 10. Usefull Functions				    		|
-|_______________________________________________|*/
+| 10. Useful Functions				    		|
+|______________________________________________*/
 
 //1. Basics
 void Basics(){
@@ -106,7 +107,7 @@ void Basics(){
 		-c 			// Ablauf nur bis zum Assembler (kein Linker)
 	}
 
-	struct 1.2 Librarys{
+	struct 1.2 Libraries{
 
 		#include <sdtio.h>
 		#include <stdlib.h>
@@ -124,16 +125,16 @@ void Basics(){
 		//Tests für Zeichenklassen
 		#include <ctype.h>
 		//Zeit und Random
-		#include <time.h>
+		#include <time.h> // evtl. mit -lm compilieren
 	}
 
 	struct 1.3 Variables{
 
 		struct 1.3.0{
-			//Variablennamen dürfen aus groß, kleinbuchstaben, nummern und _ bestehen. Nummer darf nicht am Anfang stehen.
-			//Declaration - art der Varibale wird festgelegt (keine wertzuweisung)
+			//Variablennamen dürfen aus Groß -und Kleinbuchstaben, Zahlen und _ bestehen. Zahl darf nicht am Anfang stehen.
+			//Deklaration - Art der Varibale wird festgelegt (keine Wertzuweisung)
 			int var;
-			//Definition - art der Variable wird festgelegt und Speicherplatz wird reserviert
+			//Definition - Art der Variable wird festgelegt und Speicherplatz wird reserviert
 			int var = 1;
 
 			//Datentyp  									Bitanzahl
@@ -154,9 +155,9 @@ void Basics(){
 			unsigned long long (unsigned long long int)			64
 			//Gleitkommazahlen einfache Genauigkeit
 			float												32
-			//Gleitkommazahlen doppleter Genauigkeit
+			//Gleitkommazahlen doppelte Genauigkeit
 			double												64
-			//double mit erweiterter Genauigkeit
+			//double 		 erweiterte Genauigkeit
 			long double											128
 
 			//Für char und ganzzahlige Datentypen kann signed & unsigned verwendet werden.
@@ -195,13 +196,13 @@ void Basics(){
 		}
 
 		struct 1.3.5 Konstanten{
-			#define PI 3.14 //PI wird textuel vom Präprozessor ersetzt (keine Typüberprüfung)
-			const double pi = 3.14; //konsante Variable (wert kann nicht verändert werden)
+			#define PI 3.14 //PI wird textuell vom Präprozessor ersetzt (keine Typüberprüfung)
+			const double pi = 3.14; //Konstante Variable (Wert kann nicht verändert werden)
 		}
 
 		struct 1.3.6 Globale Variablen{
 			//Gibt es eine lokale und globale Variable mit dem selben Bezeichner wird die lokale verwendet.
-			//Globale Variablen werden automatoisch initialisiert;
+			//Globale Variablen werden automatisch initialisiert (mit NULL oder 0...);
 		}
 	}
 
@@ -239,9 +240,9 @@ void Basics(){
 		_Bool A = 1;
 		char B = 'B';
 		char C = 'C';
-
-		//wenn a == 0 dann C
-		//wenn a != 0 dann B
+		//0 = nicht wahr, alles außer 0 = wahr
+		//wenn a wahr ist, dann B
+		//wenn a nicht wahr ist, dann C
 		char D = A ? B : C;
 		printf("%c\n",D);
 
@@ -270,7 +271,7 @@ void Basics(){
 					var--;
 					break;
 				default:
-					var;
+					return var;
 					break;
 			}
 		}
@@ -288,9 +289,9 @@ void Basics(){
 			for (int i = 0; i < n; i++){
 			}
 
-			break; //bricht aus schleife aus. (Bei doppelter schleife nur aus der innersten)
-			continue; //springt zum schleifendurchlauf
-			goto; //springt zu punkt - nimmt keine sau
+			break; //Bricht aus Schleife aus. (Bei doppelter Schleife nur aus der Innersten)
+			continue; //Springt zum nächsten Schleifendurchlauf
+			goto; //Springt zu vorbestimmten Punkt im Code - Aber nimmt keine Sau!
 		}
 	}
 
@@ -317,7 +318,7 @@ void Basics(){
 		}
 
 		//Endrekursiv
-		//letzer Auruf ist rekursiv
+		//Der letzte Schritt der rekursiven Funktion ist der Aufruf der rekursiven Funktion
 
 		//Stack Overflow bei zu vielen rekursiven Aufrufen!
 	}	
@@ -331,11 +332,11 @@ void Pointer(){
 	// Ohne Zuweisung zeigen sie auf zufällige Speicherstelle
 	// Nichtverwendete Pointer zunächst mit NULL initialisieren
 
-	//Beide zeigen auf die gleiche Speicherstelle
+	//Beide Pointer zeigen auf die gleiche Speicherstelle
 	pointer1 = pointer2;
 
 	int counter = 1;
-	//& - liefert einen Pointer auf die Speicherstelle von counter (vom Typ pointer auf int)
+	//Adressoperator & - liefert einen Pointer auf die Speicherstelle von counter (vom Typ pointer auf int)
 	int* pointer = &counter;
 
 	//Printing
@@ -352,7 +353,7 @@ void Pointer(){
 
 	%i     *pointer     --> Integer Wert der Adresse
 
-	// Dereferenzierungsoperator(Inhaltsoperator) - Direkter Zugriff auf Inhalt
+	// Dereferenzierungsoperator(Inhaltsoperator) * - Direkter Zugriff auf Inhalt
 
 									//	Zuweisung von Werten über Pointer mit Inhaltsoperator
 	int counter = 1;
@@ -363,17 +364,13 @@ void Pointer(){
 	*pointer = 5;
 	counter2 = *pointer;			// 	Beide variablen counter + counter 2 haben am Ende den Wert 5
 
-
 	*pointer = *pointer +1
 	//entspricht
 	counter = counter+1
 
-
 	*&value 	
 	//entspricht 
 	value
-
-
 
 	// Arrays und Pointer
 
@@ -383,7 +380,7 @@ void Pointer(){
 	alpha[0] oder alpha* 		// Zugriff auf das erste Element
 	alpha[i] oder *(alpha +i) 	// Zugriff auf das ite Element
 
-	// pointerarithmetik: Addition und Subtraktion von Pointern mit Integers
+	// Pointerarithmetik: Addition und Subtraktion von Pointern mit Integers
 	ptr = ptr + 2; 		// Pointer wurde um die Länge von 2 Elementen des entsprechenden Datentyps erhöht
 	ptr1 - ptr2 = 		// Gibt die Anzahl der Elemente zwischen den Pointern zurück
 
@@ -405,13 +402,11 @@ void Pointer(){
 	*(*(arr + 2) +1) 	--> 		Wert    des zweiten Elements der dritten Zeile
 
 
-	// Pointer  auf Arrays
+	// Pointer auf Arrays
 	int (*ptr)[10];			// Pointer auf ein Array von 10 Integern
-	int *ptr [10];			// Array mit 10 Integer pointern
-
+	int *ptr [10];			// Array mit 10 Integer-Pointern
 
 	// Mehrdimensionale Arrays in C nur simuliert
-
 
 	// Pointer auf Pointer 			Haupteinsatzgebiet: Dynamische Erzeugung von mehrdimensionalen Arrays
 	char** textpointer;				// Pointer zeigt auf Pointer zeigt auf Variable, oder endlos weiter auf Pointer
@@ -419,7 +414,6 @@ void Pointer(){
 	char* textpointer[];
 
 	// Mehrdimensionale Arrays bei Funktionen
-
 
 	void f(int (*p)[4]);
 	//entspricht
@@ -430,35 +424,25 @@ void Pointer(){
 	// Pointer auf Void
 
 	void* ptr;						// kann nicht dereferenziert werden
-									//untypisierter generischer Pointer, kompatibel zu allen anderen Pointern
+									// untypisierter generischer Pointer, kompatibel zu allen anderen Pointern
 									// in einem späteren Zeitpunkt Umwandlung in explizten Typ möglich
 
 
 
 	// Typ Qualifizierer
+	
 	// const
-
 	int* const constant_pointer;		// zeigt immer auf dieselbe Adresse, referenzierte Wert darf verändert werden
 
 	int const *constant_pointer;		// Pointer darf verändert werden, die Daten aber nicht
 
-	int const * const constant_pointer;	// konstanter Pointer auf Konstante Daten
+	int const * const constant_pointer;	// Konstanter Pointer auf Konstante Daten
 
-	// volatile							// vor jedem Zugriff Wert neu ausgelesen
-
-	// restrict							// bestimmtes Element nur über diesen restrict Zeiger zugreifbar
-
-
-	// Main function parameter
-
-	int main
-	(
-	int argc		//	(argument counter)	 Wenn größer als 1, enthalten   argv[1]    bis   argv[argc -1]   Programmparameter
-	char **argv	 	//	(argument vector)	 Array vbon Zeiger auf char
-	)				
-					// Parameter sind Zeichenketten und müssen mit Funktionen umgewandelt werden
-					// old: atoi, atol, atof
-					// new: strtol, strtoul, strtod
+	// volatile							// vor jedem Zugriff wird der Wert neu aus dem Hauptspeicher ausgelesen
+	int* volatile v_ptr;
+	
+	// restrict							// Bestimmtes Element nur über diesen restrict Zeiger zugreifbar
+	int* restrict r_ptr;
 
 	// Pointer auf Funktionen
 
@@ -479,17 +463,18 @@ void Pointer(){
 void Arrays(){
 
 	int array[5]; 					// Der Compiler legt mit malloc/calloc Speicherplatz an
-	array [2] = 10;
-	array[5] = 1; 					// Overflow
+	array[2] = 10;
+	array[5] = 1; 					// Overflow, da der Index von 0-4 geht
 	char array[] = {'A','B','C'} 	// Längenangabe kann weggelassen werden
-	double array[4] = {1.0,44.7} 	// Rest wird mit Nullen aufgefüllt
+	double array[4] = {1.0,44.7} 	// Restliche Indizes werden mit Nullen aufgefüllt
 	const int array[];				// Werte können nicht verändert werden
 	void fun (arr[]);				// Bei Übergabe eines Arrays an eine Funktion wird nur die Anfangsadresse übergeben.
 	
 	print_array((int[]){1,2,3}, MAX)//C99 Array printing
 
 	// Zwei Arrays können nicht mit arr1 = arr2 überprüft werden, sondern mit Hilfe einer Schleife
-	int size = sizeof(array) / sizeof(int);
+	
+	int size = sizeof(array) / sizeof(int); // Größe eines Arrays bestimmen
 
 	int mdarray[3][4];				// Mehrdimensionale Arrays mdarray = 3 Zeilen 4 Spalten
 
@@ -499,8 +484,8 @@ void Arrays(){
 											//	mdarray[1][0] hat Wert 2 ->	 Zeile 2 Spalte 1 (Indizes starten von 0)
 	
 	char string[] = "Hello";				// Strings in C als Character Arrays, 
-	char string[5] = {'H','e','l','l','o'};	// letztes Element \0 (0 Byte), array automatisch 1 wert größer als angegeben			
-	strlen, strcpy, strcmp					// Funktionen zur Bearbeitung von strings in string.h library
+	char string[5] = {'H','e','l','l','o'};	// letztes Element \0 (0 Byte), Array automatisch 1 wert größer als angegeben			
+	strlen, strcpy, strcmp					// Funktionen zur Bearbeitung von Strings in string.h Library
 }
 
 //4. Structs, Unions & Bitfelder 	
@@ -561,7 +546,7 @@ void Structs_Unions_Bitfelder(){
 	// In Strukturen können auch Zeiger verwendet werden (Elemente sollten aber auf dynamisch allokierten Speicherplatz zeigen)
 
 	//TYPEDEF
-		//Erstellung eines neuen Typnamens. Bringt Portabilität, Verständlichkeit ~
+		//Erstellung eines neuen Typnamens. Bringt Portabilität; Verständlichkeit (= Streitfrage);
 		// Beispiele:
 	typedef unsigned long un64;
 	typedef struct treenode tn;
@@ -577,7 +562,7 @@ void Structs_Unions_Bitfelder(){
 	//UNIONS
 		// Kein Unterschied zu Structs außer dem Schlüsselwort und dem Umgang mit den Daten.
 		// Eine Union ist eine Variable die zu verschiedenen Zeitpunkten Objekte mit verschiedenen Datentypen und Größen enthält.
-		// Mit unions kann man sich Speicherplatz sparen.
+		// Mit Unions kann man sich Speicherplatz sparen.
 		// Man kann aber immer nur 1 Wert speichern z.B. im folgenden Beispiel entweder ival oder fval oder cval;
 	
 	union u_tag{
@@ -629,7 +614,7 @@ void Dynamische_Speicherverwaltung(){
 	// REALLOC
 	void *realloc(void *ptr, size_t size)  // Möglich den reservierten Speicherplatz während der Laufzeit anzupassen.
 								// Zuerst wird die Größe des durch ptr adressierten Speicherblocks verändert (dieser muss auch dynamisch erzeugt worden sein).
-								// Es wird ein Zeiger auf die Anfangsadresse des reservierten Speicherblocks mit größe size zurückgegeben.
+								// Es wird ein Zeiger auf die Anfangsadresse des reservierten Speicherblocks mit Größe size zurückgegeben.
 								// Der ursprüngliche Inhalt bleibt erhalten.
 								// Möglichst selten verwendn, Umkopieren aufwändig
 								// Speicher kann auch verkleinert werden, hintere Abschnitt des ursprünglichen Blocks wird freigegeben
@@ -646,7 +631,7 @@ void Dynamische_Speicherverwaltung(){
 								// free setzt den Zeiger nicht auf NULL, sollte programmiert werden sonst undefiniertes Verhalten
 
 	// HEAP: Bei der dynamischen Speicherverwaltung kommt der Speicher vom Heap, wird dynamisch zugewiesen bis free aufgerufen wird.
-	//       Bei einer Speicheranforderung wird ein zusammenhängender Block angefordert. Durch anfordern und freigeben kann es zu einer Fragmentierung kommen.
+	//       Bei einer Speicheranforderung wird ein zusammenhängender Block angefordert. Durch Anfordern und Freigeben kann es zu einer Fragmentierung kommen.
 	//       Speicherreservierungen möglichst sparsam einsetzten. 
  	
  	alloca()	// Diese Funktion fordert den Speicher vom Stack an.
@@ -668,25 +653,25 @@ void Speicherklassen(){
 
 	//Gültigkeitsbereiche von Variablen und Funktionen
 
-	// Anweisungsblock: 	Nur unnerhalb des Blocks zugänglich
+	// Anweisungsblock: 	Nur innerhalb des Blocks zugänglich
 	// Funktionsprototyp: 	Variablen innerhalb eines F-Prototys gelten nur bis zum Ende der Funktion
 	// Datei/Modul: 		Speicherobjekte außerhalb einer Funktion können ab Definition bis Dateiende verwendet werden
 	// Funktion: 			Labels sind innerhalb einer Funktion überall sichtbar
 
 	// Lebensdauer
 
-	// Autopmatische Lebensdauer
+	// Automatische Lebensdauer
 		// Klasse von Speicherobjekten die zur Ausführungszeit einer Funktion/Block definiert sind. 
 		// Stack Frame wird angelegt und am Ende wieder geleert.
 
 	// Statische Lebensdauer
 		// Speicherobjekte die zur gesamten Programmlaufzeit einen festen Platz haben
-		// Statische Speicherobkekte werden nicht in einem Stack Frame sondern im Datensegment des Progs gespeichert.
+		// Statische Speicherobkekte werden nicht in einem Stack Frame sondern im Datensegment des Programms gespeichert.
 
 	// Speicherort: Speicherobjekt kann im Speicher oder Prozessorregister gehalten werden. 
 	             // Es wird zwischen Datensegment und Stack unterschieden
 
-	// Bindung: 	Extern: Speicherobjekt kann überallin einem Programm (auch mehrere Dateien) verwendet werden
+	// Bindung: 	Extern: Speicherobjekt kann überall in einem Programm (auch mehrere Dateien) verwendet werden
 				//  Intern: Speicherobjekt kann nur in derselben Datei verwendet werden, in der es definiert ist.
 				//	Keine:  Lokale Variablen
 
@@ -735,7 +720,7 @@ void Eingabe_Ausgabe(){
 		// stderr:  mit dem Bildschirm verbunden 			      ungepuffert
 
 	// Man kann die Ausgabe auch in eine Datei schreiben. Dazu wird ein Objekt vom Typ FILE angelegt und initialisiert.
-	// Eine erfolgreich geöffnete Datei liefert immer einen Zeiger auf ein FILE-Speicherobjekt zurück.
+	// Eine erfolgreich geöffnete Datei liefert immer einen Pointer auf ein FILE-Speicherobjekt zurück.
 	// Das FILE-Speicherobject ist ein Struct welcher alle wichtigen Informationen für die I/O speichert
 	
 	FILE *fp;
@@ -768,7 +753,7 @@ void Eingabe_Ausgabe(){
 	// Schließen von Dateien mit fclose
 	int fclose(FILE *fp);
 	// fclose schliest den zu fp gehörigen Datenstrom und leert den damit verbundenen Puffer
-	// Falls erfolgreich gibt die funktion 0 zurück, ansonsten etwas anderes.
+	// Falls erfolgreich gibt die Funktion 0 zurück, ansonsten etwas anderes.
 
 	// Einlesen von einzelnen Zeichen, gibt EOF bei Fehler zurück
 	int fgetc(FILE *fp);
@@ -781,7 +766,7 @@ void Eingabe_Ausgabe(){
 	// Schreiben von einzelnen Zeichen, gibt EOF bei Fehler zurück
 	int fputc(int c, FILE *fp);
 	int  putc(int c, FILE *fp);
-	int  putchar(int c); /*entspricht*/ 	petc(c,stdout);
+	int  putchar(int c);	/*entspricht*/	  petc(c,stdout);
 
 	// Beispiel: "Foliensatz 15 Seite 17"
 
@@ -790,7 +775,7 @@ void Eingabe_Ausgabe(){
 	// Vom Strom fp werden bis zu n-1 Zeichen in den Puffer buf eingelesen. Am Ende wird ein Terminierungszeichen angehängt.
 	// Gibt NULL-Pointer bei Fehler zurück, ansonsten Anfangsadresse
 
-	// Zeilenweise schreiben. Rückgabewert >=0 bei erfolgt ansonsten EOF
+	// Zeilenweise schreiben. Rückgabewert >=0 bei Erfolg ansonsten EOF
 	// fputs schreibt den nullterminerten String str in den Strom fp. Das Terminierungszeichen zählt nicht dazu.
 	int fputs(const char *restrict str, FILE *restrict fp);
 	//  puts gibt den String str auf stdout aus.
@@ -828,7 +813,7 @@ void Eingabe_Ausgabe(){
 	// Setzt die aktuelle Schreib/Leseposition an den Anfang des Stroms
 	void rewind(File *fp);
 
-	// Überprüfen ob EOF ein Fehler ist oder ob es wirklich End of file ist.
+	// Überprüfen ob EOF ein Fehler ist oder ob es wirklich End Of File ist.
 	int feof(FILE *fp); 		// Gibt ungleich 0 zurück wenn EOF-Flag für fp gesetzt ist, sonst 0
 	int ferror(FILE *fp);		// Gibt ungleich 0 zurück wenn Fehler-Flag für fp gesetzt ist, sonst 0
 	void clearerr(FILE *fp);	// Löschen von Fehler und EOF-Flags
@@ -869,16 +854,15 @@ void Commandozeilenparameter(){
 	./main abc 123
 		ARGC: 3
 		ARGV: ["./main"] ["abc"] ["123"]	
-
-	*/
 	
+	*/
 }
 
 //9. Präprozessor
-void Präprozessor(){
+void Praeprozessor(){
 
 	// Neben konstanten Variablen kann man auch konstante Funktionen als Präprozessordirektive definieren
-	//Beispiel:
+	// Beispiel:
 
 	#define eval(z) ((z) *= ((z) +1) /2 )
 
@@ -888,21 +872,20 @@ void Präprozessor(){
 	#define ausgabe(variable) printf(#variable"=%d\n",variable)
 
 	#define foo (4+foo) // nicht rekursiv, nur eine Ersetzung
-
 }
 
-//10. Usefull Functions
-void Usefull_Functions(){
+//10. Useful Functions
+void Useful_Functions(){
 
 	struct string.h {
 		strlen()	//Calculates the length of string
 		strcpy()	//Copies a string to another string
-		strcat()	//Concatenates(joins) two strings
+		strcat()	//Concatenates (joins) two strings
 		strcmp()	//Compares two string
 		strlwr()	//Converts string to lowercase
 		strupr()	//Converts string to uppercase
 		strchr()    //Locates first occurence of a char
-		strtok()	//Seperate Strings
+		strtok()	//Separate strings
 	}
 
 	struct random numbers{
@@ -916,8 +899,4 @@ void Usefull_Functions(){
 		//random number in range
 		in randomnumber = min + rand() % (max - min);
 	}
-
 }
-
-
-
