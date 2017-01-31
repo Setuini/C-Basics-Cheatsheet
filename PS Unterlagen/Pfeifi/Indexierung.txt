@@ -1,0 +1,150 @@
+AGB1----------------------------------
+a1a
+- File erstellen
+
+a1b
+- Hello World Programm
+
+a1c
+- Kommentare
+
+a1d
+- Kompilieren
+
+a1e
+- Archive (z.B. .zip, tar.gz)
+
+a1f
+- OLAT
+
+AGB2----------------------------------
+
+a1
+- Linux Distribution
+- Was ist GCC
+- GCC Version
+
+a2
+- Was ist Kompilieren
+
+a3
+- Archive (z.B. .zip, tar.gz)
+
+AGB3----------------------------------
+
+a1:
+- Zahl teilbar durch
+- Modulo Operator
+
+a2
+- while
+
+a3
+- while, if
+
+a4
+- while
+
+AGB4----------------------------------
+
+a1
+- Variablenbezeichnung
+
+a2
+- Schleife welche Werte von 1-n ausgibt, abwechselnd von oben und unten
+
+a3
+- Fibonacci iterativ
+
+a4
+- Variable Printing
+
+AGB5----------------------------------
+
+a1
+- Variable Printing
+
+a2 
+- Ausgabe von Tripel (x,y,z) ohne Duplikate
+
+a3
+- Variable Printing Value Explanation
+
+AGB6----------------------------------
+
+a1
+- For Schleife in While & Do-While Schleife umwandeln
+
+a2
+- Zufallszahlen und größer/kleiner Ausgeben
+
+AGB7----------------------------------
+
+a1
+- Taschenrechner Basic, mehrere Funktionen
+
+a2
+- Fibonacci rekursiv
+
+AGB8----------------------------------
+
+a1
+- pointer printing und Adressierung
+
+a2
+- pointer funktionen erklären
+
+AGB9----------------------------------
+
+a1
+- Pointer funktionen für Exponentialberechnung
+- 3x typisiert, 1x void
+
+a2
+- Queue mit Array und Pointer auf letztes Element
+
+
+AGB10---------------------------------
+
+a1
+- Pointer auf Funktionen
+
+a2
+- Caesar Verschlüsselung mit:
+- Pointern, String Fun., 
+
+a3
+- Queue von AGB9 mit dynamischem Speicher
+
+a4
+- Game of Life mit:
+- Zweidimensionalen Something (keine ahnung)
+
+a5
+- Erklärung von qsort_r und Implementierung von Ordnungen
+
+AGB11---------------------------------
+
+a1
+- Datensätze speichern
+- Header inkludieren
+
+a2
+- Sortierung für a1 implementieren
+
+AGB12---------------------------------
+
+a1
+- Implementierung von AGB11 a1 mir Struct
+
+a2
+- Debugging
+
+AGB13---------------------------------
+
+a1
+- Funktionen aus .h file implementieren
+- Ausgabe
+
+a2
+- Textdatei zerlegen
