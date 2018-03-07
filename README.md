@@ -1,4 +1,4 @@
-# C Basics
+### C Basics Cheatsheet
 
-ccs.c is not compilable.
-Chapters are splitet into functions and structs.
+ccs.c is not compilable!
+Chapters are splited into functions and structs.
